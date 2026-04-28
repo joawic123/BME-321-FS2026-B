@@ -221,6 +221,15 @@ Looking at the FEV1 improvenment at different ages, showed that it's reduced wit
 Looking if the participants smoke or not also lead to an interesting conclusion. Former smokers and participants who never smoked had a lower FEV1 improvement compared to smokers. The strongest reduction reduction have never smokers (-0.213, p < 0.001). 
 
 
+```{r}
+#| label: session-info
+#| include: false
+
+sessionInfo()
+```
+
+
+
 
 
 
