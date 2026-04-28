@@ -1,2 +1,113 @@
 ---
+title: "Analysis Inhaler"
+author: "Joana"
+date: today
+toc: true
+abstract-title: "Research question:"
+abstract: "Does a new inhaled corticosteroid (ICS-X) perform better in a Randomized control trial over 6 weeks in patients with mild persistent asthma compared to a standard inhaler?"
+format:
+  html:
+    embed-resources: true
+    number-sections: true
+    code-fold: show
+editor: visual
+editor_options:
+  chunk_output_type: console
+execute:
+  warning: false
+  message: false
+---
+
+## Prepare session
+In this step the Quarto project has been prepared for the analysis of the data set lung function which contains 180 data points of distinct patients. The data set displays information about the age, FEV-1 improvement, baseline FEV-1, treatment group and smoking status. 
+
+```{r}
+#| label: prepare-session
+#| echo: false
+
+# Load packages
+  library(pastecs)
+  library(ggpubr); theme_set(theme_bw())
+  library(GGally)
+  library(performance)
+  library(MuMIn)
+  library(ggeffects)
+
+  library(knitr) 
+
+setwd("/Users/joanawick/Desktop/BME-321-FS2026-B")
+
+# Import data
+lung <- read.csv("data/processed/lung-function.csv")
+
+```
+
+
+## Explore the data
+To look at the different inhalation methods, the dataset is analyzed numerically and graphically.
+
+### Numerically
+For the numerical exploration of the data, first the tabel @tbl-explore-data has been created, with which the descriptive statistics can be looked at. 
+```{r}
+#| label: tbl-explore-data
+#| tbl-cap: "Descriptive statistics table of the variables of interest."
+#| echo: false
+
+# Numerically
+ sum_stats<-
+   stat.desc(lung [, c("fev1_improvement", "age", "baseline_fev1", "treatment_group")], norm= T)
+
+ kable(sum_stats, digits= 1)
+
+
+```
+
+To get information about the proportion in which the various treatments have been used, the tabel @tbl-treatment-group has been created.
+```{r}
+#| label: tbl-treatment-group
+#| tbl-cap: "This table displays information about the proportion of the treatment groups."
+#| echo: false
+
+## numerically
+table(lung$treatment_group)
+```
+
+Another important factor in the analysis is the smoking status. The @tbl-smoking-status serves to further elaborate the smoking status of the participants.
+```{r}
+#| label: tbl-smoking-status
+#| tbl-cap: "This table displays information about the proportion of the participants which smoke."
+#| echo: false
+
+## numerically
+table(lung$smoking_status)
+```
+
+
+### Graphically 
+To get a further impression of the data, it can be displayed graphically. The first step is to compare the treatment groups with @fig-boxplot.
+
+```{r}
+#| label: fig-boxplot
+#| fig-cap: "This figure shows the outcome between the treatment groups."
+#| echo: false 
+
+ggplot(lung, aes(x = treatment_group, y = fev1_improvement)) +
+  geom_boxplot() +
+  labs(title = "Improvement by Treatment Groups",
+    x = "Treatment Group", y = "FEV1 Improvement")
+
+```
+
+With the second @fig-histogram, the distribution of the FEV1 improvement can be explored.
+```{r}
+#| label: fig-histogram
+#| fig-cap: "This figure shows how the FEV1 improvement is distributed."
+#| echo: false 
+
+ggplot(lung, aes(x = fev1_improvement)) +
+  geom_histogram(bins = 20) +
+  labs(title = "Distribution FEV1 Improvement",
+    x = "FEV1 Improvement", y = "Count")
+
+```
 
