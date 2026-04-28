@@ -1,0 +1,50 @@
+---
+title: "Analysis Inhaler"
+author: "Joana"
+date: today
+toc: true
+abstract-title: "Research question:"
+abstract: "Does a new inhaled corticosteroid (ICS-X) perform better in a Randomized control trial over 6 weeks in patients with mild persistent asthma compared to a standard inhaler?"
+format:
+  html:
+    embed-resources: true
+    number-sections: true
+    code-fold: show
+editor: visual
+editor_options:
+  chunk_output_type: console
+execute:
+  warning: false
+  message: false
+---
+
+## Prepare session
+In this step the Quarto project has been prepared for the analysis of the data set lung function which contains 180 data points of distinct patients. The data set displays information about the age, FEV-1 improvement, baseline FEV-1, treatment group and smoking status. 
+
+```{r}
+#| label: prepare-session
+#| echo: false
+
+# Load packages
+  library(pastecs)
+  library(ggpubr); theme_set(theme_bw())
+  library(GGally)
+  library(performance)
+  library(MuMIn)
+  library(ggeffects)
+
+  library(knitr) 
+
+setwd("/Users/joanawick/Desktop/BME-321-FS2026-B")
+
+# Import data
+lung <- read.csv("data/processed/lung-function.csv")
+
+```
+
+
+## Explore the data
+
+### Numerically
+
+### Graphically 
