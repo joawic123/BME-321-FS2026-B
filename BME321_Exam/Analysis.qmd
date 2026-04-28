@@ -47,6 +47,7 @@ lung <- read.csv("data/processed/lung-function.csv")
 To look at the different inhalation methods, the dataset is analyzed numerically and graphically.
 
 ### Numerically
+For the numerical exploration of the data, first the tabel @tbl-explore-data has been created, with which the descriptive statistics can be looked at. 
 ```{r}
 #| label: tbl-explore-data
 #| tbl-cap: "Descriptive statistics table of the variables of interest."
@@ -59,10 +60,54 @@ To look at the different inhalation methods, the dataset is analyzed numerically
  kable(sum_stats, digits= 1)
 
 
+```
 
+To get information about the proportion in which the various treatments have been used, the tabel @tbl-treatment-group has been created.
+```{r}
+#| label: tbl-treatment-group
+#| tbl-cap: "This table displays information about the proportion of the treatment groups."
+#| echo: false
+
+## numerically
+table(lung$treatment_group)
+```
+
+Another important factor in the analysis is the smoking status. The @tbl-smoking-status serves to further elaborate the smoking status of the participants.
+```{r}
+#| label: tbl-smoking-status
+#| tbl-cap: "This table displays information about the proportion of the participants which smoke."
+#| echo: false
+
+## numerically
+table(lung$smoking_status)
 ```
 
 
 ### Graphically 
+To get a further impression of the data, it can be displayed graphically. The first step is to compare the treatment groups with @fig-boxplot.
 
+```{r}
+#| label: fig-boxplot
+#| fig-cap: "This figure shows the outcome between the treatment groups."
+#| echo: false 
+
+ggplot(lung, aes(x = treatment_group, y = fev1_improvement)) +
+  geom_boxplot() +
+  labs(title = "Improvement by Treatment Groups",
+    x = "Treatment Group", y = "FEV1 Improvement")
+
+```
+
+With the second @fig-histogram, the distribution of the FEV1 improvement can be explored.
+```{r}
+#| label: fig-histogram
+#| fig-cap: "This figure shows how the FEV1 improvement is distributed."
+#| echo: false 
+
+ggplot(lung, aes(x = fev1_improvement)) +
+  geom_histogram(bins = 20) +
+  labs(title = "Distribution FEV1 Improvement",
+    x = "FEV1 Improvement", y = "Count")
+
+```
 
