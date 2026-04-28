@@ -144,4 +144,86 @@ Before the chosen model can be interpreted, it has to be validated. To do so, th
 check_model(m3)
 ```
 
+## Interpret model
+As m3 has been chosen and validated, the data interpretation can continue with it. 
+
+```{r}
+#| label: interpret-obj
+#| include: false
+
+# summary
+summary(m3)
+
+# coefficient table
+coef.table <- round(summary(m3)$coefficients, 3)
+
+# adjusted R2
+r2 <- round(summary(m3)$adj.r.squared, 3)
+
+# model AIC
+model_aic <- round(AIC(m3), 2)
+
+# pred
+pred_age <- predict_response(m3, "age")
+pred_baseline <- predict_response(m3, "baseline_fev1")
+pred_treatment <- predict_response(m3, "treatment_group")
+
+```
+
+```{r}
+#| label: fig-pred-age
+#| fig-cap: "Predicted FEV1 improvement at different ages."
+#| echo: false 
+
+ggplot(pred_age, aes(x, predicted)) +
+  geom_point(data = lung, aes(age, fev1_improvement), alpha = 0.5) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2) +
+  geom_line() +
+  labs(x = "Age", y = "predicted FEV1 improvement")
+
+```
+
+```{r}
+#| label: fig-pred-baseline
+#| fig-cap: "Predicted improvement with FEV1 across the baseline."
+#| echo: false 
+
+ggplot(pred_baseline, aes(x, predicted)) +
+  geom_point(data = lung, aes(baseline_fev1, fev1_improvement), alpha = 0.5) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2) +
+  geom_line() +
+  labs(x = "Baseline FEV1", y = "predicted FEV1 improvement")
+```
+
+```{r}
+#| label: fig-pred-treatment
+#| fig-cap: "Predicted improvement with FEV1 in the different treatment groups."
+#| echo: false 
+
+ggplot(pred_treatment, aes(x, predicted)) +
+  geom_point(data = lung, aes(treatment_group, fev1_improvement), alpha = 0.5) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2) +
+  geom_line() +
+  labs(x = "Treatment group", y = "predicted FEV1 improvement")
+```
+
+```{r}
+#| label: tbl-model-results
+#| tbl-cap: !expr paste("Linear model results for the preferred model. Adjusted R² = ", r2, ", AIC = ", model_aic, ".")
+#| echo: false 
+
+kable(coef.table)
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
