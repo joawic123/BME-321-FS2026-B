@@ -44,7 +44,25 @@ lung <- read.csv("data/processed/lung-function.csv")
 
 
 ## Explore the data
+To look at the different inhalation methods, the dataset is analyzed numerically and graphically.
 
 ### Numerically
+```{r}
+#| label: tbl-explore-data
+#| tbl-cap: "Descriptive statistics table of the variables of interest."
+#| echo: false
+
+# Numerically
+ sum_stats<-
+   stat.desc(lung [, c("fev1_improvement", "age", "baseline_fev1", "treatment_group")], norm= T)
+
+ kable(sum_stats, digits= 1)
+
+
+
+```
+
 
 ### Graphically 
+
+
