@@ -132,12 +132,16 @@ kable(compare_performance(m0, m1, m2, m3), digits= 3)
 
 ```
 
-After fitting and comparing the models, m3 has been chosen to continue as it has the lowest AIC and BIC and the highest adjusted R^2. M3 has an adjusted R^2 has a `r round(performance::r2(m3)$R2_adjusted, 3)`
+After fitting and comparing the models, m3 has been chosen to continue as it has the lowest AIC and BIC and the highest adjusted R^2. M3 has an adjusted R^2 has a `r round(performance::r2(m3)$R2_adjusted, 3)`.
 
 ### Validate the preferred model
-Before the chosen model can be interpreted, it has to be validated.
+Before the chosen model can be interpreted, it has to be validated. To do so, the @fig-model-diagnostic has been created. Model 3 works well to continue with.
 
 ```{r}
+#| label: fig-model-diagnostic
+#| fig-cap: "This figures show the diagonstic plots for the preferred linear model (m3)."
 
+check_model(m3)
 ```
+
 
