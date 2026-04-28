@@ -111,3 +111,33 @@ ggplot(lung, aes(x = fev1_improvement)) +
 
 ```
 
+## Fit models 
+After the initial graphical and numerical exploration of the data, the models have been fit (@tbl-fit-models). As we have a continous outcome variable (FEV1 improvement), the data is fitted with a linear model. 
+
+### Formulate and compare
+```{r}
+#| label: tbl-fit-models
+#| tbl-cap: "Model comparison."
+#| echo: true
+#| results: "hide"
+
+# fit models
+m0 <- lm(fev1_improvement ~ 1, lung)
+m1 <- lm(fev1_improvement ~ treatment_group, lung)
+m2 <- lm(fev1_improvement ~ treatment_group + age + baseline_fev1, lung)
+m3 <- lm(fev1_improvement ~ treatment_group + age + baseline_fev1 + smoking_status, lung)
+
+# compare models
+kable(compare_performance(m0, m1, m2, m3), digits= 3)
+
+```
+
+After fitting and comparing the models, m3 has been chosen to continue as it has the lowest AIC and BIC and the highest adjusted R^2. M3 has an adjusted R^2 has a `r round(performance::r2(m3)$R2_adjusted, 3)`
+
+### Validate the preferred model
+Before the chosen model can be interpreted, it has to be validated.
+
+```{r}
+
+```
+

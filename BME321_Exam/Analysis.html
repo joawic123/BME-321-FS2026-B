@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 }
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+}
+pre.numberSource { margin-left: 3em; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -2180,6 +2215,11 @@ vertical-align: -.125em;
   <li><a href="#numerically" id="toc-numerically" class="nav-link" data-scroll-target="#numerically"><span class="header-section-number">2.1</span> Numerically</a></li>
   <li><a href="#graphically" id="toc-graphically" class="nav-link" data-scroll-target="#graphically"><span class="header-section-number">2.2</span> Graphically</a></li>
   </ul></li>
+  <li><a href="#fit-models" id="toc-fit-models" class="nav-link" data-scroll-target="#fit-models"><span class="header-section-number">3</span> Fit models</a>
+  <ul class="collapse">
+  <li><a href="#formulate-and-compare" id="toc-formulate-and-compare" class="nav-link" data-scroll-target="#formulate-and-compare"><span class="header-section-number">3.1</span> Formulate and compare</a></li>
+  <li><a href="#validate-the-preferred-model" id="toc-validate-the-preferred-model" class="nav-link" data-scroll-target="#validate-the-preferred-model"><span class="header-section-number">3.2</span> Validate the preferred model</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -2468,6 +2508,38 @@ Figure 2: This figure shows how the FEV1 improvement is distributed.
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="fit-models" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="fit-models"><span class="header-section-number">3</span> Fit models</h2>
+<p>After the initial graphical and numerical exploration of the data, the models have been fit (<a href="#tbl-fit-models" class="quarto-xref">Table 4</a>). As we have a continous outcome variable (FEV1 improvement), the data is fitted with a linear model.</p>
+<section id="formulate-and-compare" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="formulate-and-compare"><span class="header-section-number">3.1</span> Formulate and compare</h3>
+<div id="tbl-fit-models" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fit-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 4: Model comparison.
+</figcaption>
+<div aria-describedby="tbl-fit-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<details open class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit models</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev1_improvement <span class="sc">~</span> <span class="dv">1</span>, lung)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev1_improvement <span class="sc">~</span> treatment_group, lung)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev1_improvement <span class="sc">~</span> treatment_group <span class="sc">+</span> age <span class="sc">+</span> baseline_fev1, lung)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev1_improvement <span class="sc">~</span> treatment_group <span class="sc">+</span> age <span class="sc">+</span> baseline_fev1 <span class="sc">+</span> smoking_status, lung)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compare models</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">compare_performance</span>(m0, m1, m2, m3), <span class="at">digits=</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</figure>
+</div>
+<p>After fitting and comparing the models, m3 has been chosen to continue as it has the lowest AIC and BIC and the highest adjusted R^2. M3 has an adjusted R^2 has a 0.47</p>
+</section>
+<section id="validate-the-preferred-model" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="validate-the-preferred-model"><span class="header-section-number">3.2</span> Validate the preferred model</h3>
+<p>Before the chosen model can be interpreted, it has to be validated.</p>
 </section>
 </section>
 
