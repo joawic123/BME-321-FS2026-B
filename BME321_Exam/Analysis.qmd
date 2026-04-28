@@ -215,13 +215,10 @@ ggplot(pred_treatment, aes(x, predicted)) +
 kable(coef.table)
 ```
 
-
-
-
-
-
-
-
+## Conclusion
+The linear model (m3) which has been chosen explains `r round(r2 * 100, 1)`% of the variability in the improvement with the FEV1 treatment. Overall the patients with the standard treatment showed significantly lower (-0.063, p = 0.016) improvement. This leads to the conclusion the ICSX helps improving the lung function.
+Looking at the FEV1 improvenment at different ages, showed that it's reduced with higher age (-0.009, p < 0.001). Higher baseline of FEV1 led also to a less good improvement (-0.182, p < 0.001). This could be because there is less room for improvement. 
+Looking if the participants smoke or not also lead to an interesting conclusion. Former smokers and participants who never smoked had a lower FEV1 improvement compared to smokers. The strongest reduction reduction have never smokers (-0.213, p < 0.001). 
 
 
 
